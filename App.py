@@ -1,6 +1,4 @@
-
-import streamlit as st
-import pandas as pd
+pandas as pd
 import numpy as np
 import yfinance as yf
 import time
@@ -14,12 +12,7 @@ st.write("Yeh app live market data (RSI) par mabni signals fraham karti hai.")
 asset = st.selectbox("Select Currency Pair / Asset", ["EURUSD=X", "GBPUSD=X", "USDJPY=X", "AUDUSD=X", "BTC-USD"])
 
 if st.button("Generate Live Signal"):
-    with st.spinner('Market data fetch ho raha hai...'):
-        try:
-            # Fetching recent data
-            data = yf.download(asset, period="5d", interval="1m", progress=False)
-            
-            if len(data) > 14:
+    with st.spinner('Market data fetch ho ra
                 # Calculate RSI
                 delta = data['Close'].diff()
                 gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
@@ -36,13 +29,4 @@ if st.button("Generate Live Signal"):
                 # Signal Logic
                 st.subheader("Signal Output:")
                 if current_rsi < 30:
-                    st.success("🟢 **STRONG BUY (Oversold)** — Market oopar ja sakti hai!")
-                elif current_rsi > 70:
-                    st.error("🔴 **STRONG SELL (Overbought)** — Market neeche aa sakti hai!")
-                else:
-                    st.warning("⚪ **NEUTRAL / WAIT** — Filhal koi clear signal nahi hai, intezar karein.")
-            else:
-                st.error("Data kam hai, kuch der baad dobara koshish karein.")
-        except Exception as e:
-            st.error(f"Error a gaya hai: {e}")
-          
+        
